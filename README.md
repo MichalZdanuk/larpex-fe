@@ -1,57 +1,65 @@
-# larpex-fe
-Aplikacja webowa do zarządzania wydarzeniami LARP.
+# LARPEX
+Projekt zrealizowany w dużym zespole składającym się z 15 osób. Wydzielono zespoł architektów (2), dwa zespoły back-end (5), trzy zespoły front-end (6) oraz zespoł bazodanowy (2). Projekt polegał na przesymulowaniu dwóch iteracji projektu w ramach, których należało wytworzyć odpowiednie modele architketoniczne, a następnie zgodnie z nimi zaimplementować zadaną funkcjonalność systemu.
 
-## Zaproponowane konwencje i praktyki
-* **Konwencja nazewnicza plików i katalogów**
+## Organizacja pracy
+W projekcie pełniłem rolę głównego front-end developera, odpowiedzialnego za implementację interfejsu graficznego, konfigurację projektu oraz komunikację i ustalanie szczegółów z architektami. Moje zadania obejmowały również koordynację działań zespołu oraz zapewnienie spójności między warstwą graficzną a strukturą architektoniczną projektu.
 
-  Do nazywania katalogów używamy camelCase (myComponent), a komponenty nazywamy PascalCase (MyComponent.tsx)
-* **Konwencja rozszerzeń plików (.tsx, .ts)**
+Rozpiska spotkań projektowych:
+1. **Organizacja** - przedstawienie regulaminu i harmonogramu, podział na grupy, wręczenie specyfikacji projektu
+2. **Zaplanowanie projektu.** - omówienie specyfikacji projektu, Scrum-Poker
+3. **Iteracja I: rozpoczęcie** - omówienie przyjętego modelu architektonicznego, wybór technologii przez zespoły developerskie
+4. **Iteracja I: wypracowywanie rozwiązania** - przedstawienie diagramów klas do wybranych przypadków użycia 
+5. **Iteracja I: weryfikacja projektu** - przedstawienie diagramów sekwencji do wybranych przypadków użycia
+6. **Iteracja I: weryfikacja implementacji** - demonstracja postępów implementacji oraz zgodności z projektem architektonicznym
+7. **Iteracja I: wstępna prezentacja systemu** - prezentacja aktualnego stanu implementacji systemu
+8. **Iteracja I: testy akceptacyjne systemu** - wykonanie testów systemu zgodnie ze scenariuszami
+9. **Iteracja II: rozpoczęcie** - wybór przypadków użycia do realizacji w II sprincie
+10. **Iteracja II: wypracowywanie rozwiązania** - przedstawienie diagramów klas do wybranych przypadków użycia 
+11. **Iteracja II: weryfikacja projektu** - przedstawienie diagramów sekwencji do wybranych przypadków użycia
+12. **Iteracja II: weryfikacja implementacji** - demonstracja postępów implementacji oraz zgodności z projektem architektonicznym
+13. **Iteracja II: wstępna prezentacja systemu** - prezentacja aktualnego stanu implementacji systemu
+14. **Testy akceptacyjne i końcowa prezentacja systemu** - wykonanie testów całęgo systemu zgodnie ze scenariuszami
+15. **Podsumowanie** - podsumowanie prac
 
-  Propozycja, by komponenty Reactowe tworzyć z rozszerzeniem .tsx, a pliki gdzie mamy funkcje do np. wyciągania danych z BE, czy logiki .ts. To może nam pozwlić przy szybkim "skanowaniu" struktury katalogów, w którym pliki znajdziemy logikę, a w którym sam widok.
-* **Komponenty Ogólnodostępne**
+## Case Study Projektu
+*LARPEX* to system służący do optymalizacji procesu przygotowania, organizacji oraz przeprowadzania gier typu LARP. Aplikacja umożliwia definiowanie szablonów gier, ogłaszanie wydarzeń oraz uruchamianie na nie zapisów, opłatę organizacji wydarzeń oraz przeprowadzenie gry. Użytkownicy mają możliwość zapisywać się na wybrane wydarzenia oraz kontrolować przebieg gier przy użyciu własnych smartphone'ów.
 
-  Do komponentów ogólnych twórzmy dedykowane katalogi w /src, a nie wewnątrz naszych UC. To tyczy się przykładowo AppLayout/Navbar, gdzie mamy nasz pasek nawigacyjny, który jest komponentem ogólnym do całej aplikacji.
-* **Reużywalne mechaniki**
+## Stos technologiczny
+* BackEnd: .NET Web API
+* FrontEnd: Vite, React (axios, react-router, bootstrap)
+* Baza danych: PostgreSQL
 
-  W katalogu /src mamy podkatalog */globals* tam możemy umieszczać mechanizmy ogólne, z których kilka zespołów korzysta. Ja umiściłem plik connections.ts, gdzie mamy export apiUrl, żebyśmy sobie importowali z tamtąd, a nie hardcodowali w różnych miejscach apliakcji ten sam url. Po to jest ten katalog /globals.
-* **Struktura katalogów**
+## Zakres zrealizowanego systemu
+W ramach projektu przeprowadzono symulację dwóch iteracji projektu. Jest to krótki okres, niemniej jednak pomyślnie zaimplementowano wybranych, dziesięc przypadków użycia. Poniżej przedstawiona jest lista zrealizowanych przypadków użycia (**pogrubione przypadki zostały zrealizowane przeze mnie**):
 
-    W katalogu /src tworzymy na każdy UC jeden katalog np. UCCreateEvent, a w nim dodajemy pliki (tsx, style css itp.). Wewnątrz też możemy to podzielić na np. subkatalogi View - tylko elementy ekranowe, Present/Logic/Service do obsługi logiki (wysyłanie zapytań do BE i inne) i Model - typy danych i interfejsy (np. ty umieścimy Event i jego pola). ** Jest to tylko propozycja, szczególnie te podkatalogi. A podział na katalogi o nazwach UC wydaje się sensowny, by łatwo szukać konkretnych plików **
-* **Style css**
+Sprint I:
+- [x] **Dokonanie płatności**
+- [x] Utworzenie wydarzenia
+- [x] Zmiana ustawień wydarzenia 
+- [x] Wyświetlenie panelu organizatora wydarzeń
+Sprint II:
+- [x] **Wyświetlenie listy propozycji gier**
+- [x] **Wydanie werdyktu na temat propozycji gry**
+- [x] Wprowadzenie poprawek do gry
+- [x] Wyświetlenie kreatora gry
+- [x] Przesłanie propozycji gry
+- [x] Modyfikacja gry
+## Modele architektoniczne
+Przedstawiam diagramy klas i sekwencji zaprojektowane zgodnie z językiem UML do przełożenia wymagań na implementację przypadku użycia *Dokonanie płatności*:
 
-  Proponuję korzystać wszędzie z modułowego załączania css. W praktyce do widoku ExampleView.tsx tworzymy odpowiadający mu plik ExampleView.module.css (nazwa taka sama jak pliku z komponentem + module.css). Każdy plik widoku ma swój własny css. Następnie zwykły import (import classes from './ExampleView.module.css'). Zalety: spójna konwencja, wiadomo gdzie szukać odpowienich styli do interesujących elementów, **możemy niezależnie od siebie nazywać klasy, a gdyby jeden zespół nazwał klasę css .button i drugi tak samo, to wówczas możemy mieć nieprzyjemne side effect'y i do elementu trafi nie ten styl, które oczekiwaliśmy. Moduły dodają w praktyce do nazw ciąg losowych znaków przez co nigdy dwie nazwy nie będą takie same**. Niżej wyjaśnienie jak korzystać:
+* diagram klas: 
 
-![image](https://github.com/PO-2023Z/larpex-fe/assets/76063659/19d2cda2-faa6-4ace-884e-c06229bc7baf)
+![platnosc_diagram_klas](https://github.com/MichalZdanuk/larpex-fe/assets/76063659/62a0b3ea-901f-409f-b550-918eede8e611)
 
-![image](https://github.com/PO-2023Z/larpex-fe/assets/76063659/6dc934e7-6a69-4cdf-ac51-27ebf3675d0e)
+* diagram sekwencji:
 
-## Pierwsze uruchomienie aplikacji
-* Przechodzimy do katalogu z projektem
-```
-cd larpex-web-fe
-```
-* Instalujemy zależności
-```
-npm install
-```
-* Uruchamiamy projekt (dostępne domyślnie na localhost:5173)
-```
-npm run dev
-```
+![platnosc_diagram_sekwencji](https://github.com/MichalZdanuk/larpex-fe/assets/76063659/3c94be79-e00d-490e-8624-34b21e2f65fa)
 
-Nasze wszystkie zmiany, czy use-case'y robimy zawsze na oddzielnym branch'u, a następnie wystawiamy PR i mergujemy do mastera.
-## Mini instrukcja jak działamy
-* Przechodzimy na main i pullujemy zmiany
-```
-git checkout main
-```
-```
-git pull
-```
-* Przechodzimy na nowy branch 
-```
-git checkout -b ImieNazwisko_NazwaZadania
-```
-* Wykonujemy działania
-* Tworzymy pull request, domerge'owujemy najnowszego main'a
-* Jeśli nie ma konfliktu to mergujemy do main'a, jak konflikt to rozwiązujemy
+## Demo systemu
+Poniżej jako przykład przedstawiono realizację przypadków użycia *Wyświetlenie listy propozycji gier* i *Wydanie werdyktu na temat propozycji gry*:
+
+![uc_sprintII](https://github.com/MichalZdanuk/larpex-fe/assets/76063659/3e8975ec-851f-4732-9d01-3f33c814cc3c)
+
+
+## Warstwa BackEnd
+Warstwa backend została zrealizowana przez dwa zespoły, repozytorium z kodem dostępne pod linkiem: https://github.com/PO-2023Z/larpex-be
